@@ -7,9 +7,13 @@
     <link rel="stylesheet" href="./assets/styles.css" />
     <!-- Import Vue.js -->
     <script src="https://unpkg.com/vue@next"></script>
+ 
   </head>
   <body>
     <div id="app">
+      <div>
+        <p>{{ cart }}</p>
+      </div>
       <h1>{{ product }}</h1>
       <a :href="url">
         <img :src="image" width="355" height="390" alt="" />
@@ -23,15 +27,17 @@
         <li v-for="detail in details">{{ detail }}</li>
       </div>
       <div>
-        <p v-for="variant in variants" :key="variant.key">
+        <p v-for="variant in variants" :key="variant.id" @mouseover="updateImage(variant.image)">
           {{ variant.color }}
         </p>
-          <p v-for="size in sizes">
-            {{ size }}
+        <p v-for="size in sizes">
+          {{ size }}
         </p>
       </div>
-
-      </div>
+      <button class="button" @click="addToCart" >Add to cart</button>
+      <button class="button" @click="addToCart">+</button>
+      <button class="button" @click="removeFromCart">-</button>
+    </div>
     </div>
     <!-- Import Js -->
     <script src="./main.js"></script>

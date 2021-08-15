@@ -1,6 +1,7 @@
 const app = Vue.createApp({
   data() {
     return {
+      cart: 0,
       description: 'Preimum socks',
       image: './assets/images/socks_blue.jpg',
       url: './assets/images/socks_blue.jpg',
@@ -22,6 +23,17 @@ const app = Vue.createApp({
         },
       ],
     };
+  },
+  methods: {
+    addToCart() {
+      this.cart += 1;
+    },
+    removeFromCart() {
+      this.cart -= 1;
+    },
+    updateImage(variantImage) {
+      this.image = variantImage;
+    },
   },
 });
 const storeApp = app.mount('#app');
