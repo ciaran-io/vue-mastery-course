@@ -5,7 +5,9 @@ const app = Vue.createApp({
       image: './assets/images/socks_blue.jpg',
       url: './assets/images/socks_blue.jpg',
       product: 'Socks',
+      inventory: 20,
+      onSale: true,
     };
   },
 });
-app.mount('#app');
+const storeApp = app.mount('#app');

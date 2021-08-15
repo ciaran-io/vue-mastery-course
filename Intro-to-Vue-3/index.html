@@ -13,8 +13,12 @@
       <h1>{{ product }}</h1>
       <a :href="url">
         <img :src="image" width="355" height="390" alt="" />
+        <p v-if="inventory > 10">In Stock</p>
+        <p v-else-if="inventory < 10 && inventory > 0">Almost sold out</p>
+        <p v-else>Sold out</p>
       </a>
       <p>{{ description }}</p>
+      <p v-if="onSale">on sale!</p>
     </div>
     <!-- Import Js -->
     <script src="./main.js"></script>
