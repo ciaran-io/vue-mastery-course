@@ -1,2 +1,10 @@
-const app = Vue.createApp({});
-const storeApp = app.mount('#app');
+const app = Vue.createApp({
+  data() {
+    return {
+      cart: 0,
+      premium: false,
+    };
+  },
+  methods: {},
+  computed: {},
+});
