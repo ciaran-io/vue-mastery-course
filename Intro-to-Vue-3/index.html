@@ -7,37 +7,47 @@
     <link rel="stylesheet" href="./assets/styles.css" />
     <!-- Import Vue.js -->
     <script src="https://unpkg.com/vue@next"></script>
- 
   </head>
   <body>
     <div id="app">
       <div>
-        <p>{{ cart }}</p>
+        <p>Cart({{ cart }})</p>
       </div>
       <h1>{{ product }}</h1>
       <a :href="url">
         <img :src="image" width="355" height="390" alt="" />
+      </a>
+      <div>
+        <p>{{ description }}</p>
         <p v-if="inventory > 10">In Stock</p>
         <p v-else-if="inventory < 10 && inventory > 0">Almost sold out</p>
         <p v-else>Sold out</p>
-      </a>
-      <p>{{ description }}</p>
-      <p v-if="onSale">on sale!</p>
-      <div>
-        <li v-for="detail in details">{{ detail }}</li>
+        <p v-if="onSale">on sale!</p>
       </div>
       <div>
-        <p v-for="variant in variants" :key="variant.id" @mouseover="updateImage(variant.image)">
-          {{ variant.color }}
-        </p>
-        <p v-for="size in sizes">
-          {{ size }}
-        </p>
+        <ul v-for="detail in details">
+          <li>{{ detail }}</li>
+        </ul>
       </div>
-      <button class="button" @click="addToCart" >Add to cart</button>
-      <button class="button" @click="addToCart">+</button>
-      <button class="button" @click="removeFromCart">-</button>
-    </div>
+      <div
+        v-for="variant in variants"
+        :key="variant.id"
+        @mouseover="updateImage(variant.image)"
+      >
+        <div class="product-container">
+          <span class="color-circle" :style="{ backgroundColor: variant.color}">
+          </span>
+          <span> {{ variant.color }} </span>
+        </div>
+      </div>
+      <div>
+        <p v-for="size in sizes">{{ size }}</p>
+      </div>
+      <div>
+        <button class="button" :class="{disabledButton: !inStock}" :disabled="!inStock" @click="addToCart">Add to cart</button>
+        <button class="button" :class="{disabledButton: !inStock}" :disabled="!inStock" @click="addToCart">+</button>
+        <button class="button" :class="{disabledButton: !inStock}" :disabled="!inStock" @click="removeFromCart">-</button>
+      </div>
     </div>
     <!-- Import Js -->
     <script src="./main.js"></script>
