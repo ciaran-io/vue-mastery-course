@@ -13,16 +13,16 @@
       <div>
         <p>Cart({{ cart }})</p>
       </div>
+      <h1>{{ title }}</h1>
       <h1>{{ product }}</h1>
       <a :href="url">
         <img :src="image" width="355" height="390" alt="" />
       </a>
       <div>
         <p>{{ description }}</p>
-        <p v-if="inventory > 10">In Stock</p>
-        <p v-else-if="inventory < 10 && inventory > 0">Almost sold out</p>
+        <p v-if="inStock">In Stock</p>
         <p v-else>Sold out</p>
-        <p v-if="onSale">on sale!</p>
+        <p v-if="isOnSale">{{ salesMessage }} </p>
       </div>
       <div>
         <ul v-for="detail in details">
@@ -30,14 +30,15 @@
         </ul>
       </div>
       <div
-        v-for="variant in variants"
+        v-for="(variant, index) in variants"
         :key="variant.id"
-        @mouseover="updateImage(variant.image)"
+        @mouseover="updateVariant(index)"
       >
         <div class="product-container">
           <span class="color-circle" :style="{ backgroundColor: variant.color}">
           </span>
           <span> {{ variant.color }} </span>
+          <span> {{ variant.quantity }} </span>
         </div>
       </div>
       <div>
