@@ -1,45 +1,51 @@
 app.component('product-display', {
+  props: {
+    premium: {
+      type: Boolean,
+      required: true,
+    },
+  },
   template:
     /*html*/
     `<div>
-  <h1>{{ title }}</h1>
-  <h1>{{ product }}</h1>
-  <a :href="url">
-    <img :src="image" width="355" height="390" alt="" />
-  </a>
-  <div>
-    <p>{{ description }}</p>
-    <p v-if="inStock">In Stock</p>
-    <p v-else>Sold out</p>
-    <p v-if="isOnSale">{{ salesMessage }} </p>
-  </div>
-  <div>
-    <ul v-for="detail in details">
-      <li>{{ detail }}</li>
-    </ul>
-  </div>
-  <div
-    v-for="(variant, index) in variants"
-    :key="variant.id"
-    @mouseover="updateVariant(index)"
-  >
-    <div class="product-container">
-      <span class="color-circle" :style="{ backgroundColor: variant.color}">
-      </span>
-      <span> {{ variant.color }} </span>
-      <span> {{ variant.quantity }} </span>
-    </div>
-  </div>
-  <div>
-    <p v-for="size in sizes">{{ size }}</p>
-  </div>
-  <div>
-    <button class="button" :class="{disabledButton: !inStock}" :disabled="!inStock" @click="addToCart">Add to cart</button>
-    <button class="button" :class="{disabledButton: !inStock}" :disabled="!inStock" @click="addToCart">+</button>
-    <button class="button" :class="{disabledButton: !inStock}" :disabled="!inStock" @click="removeFromCart">-</button>
-  </div>
-  </div>
-  `,
+      <h1>{{ title }}</h1>
+      <h1>{{ product }}</h1>
+      <a :href="url">
+        <img :src="image" width="355" height="390" alt="" />
+      </a>
+      <div>
+        <p>{{ description }}</p>
+        <p v-if="inStock">In Stock</p>
+        <p v-else>Sold out</p>
+        <p v-if="isOnSale">{{ salesMessage }} </p>
+      </div>
+      <div>
+      <p>Shipping: {{ shipping }} </p>
+      </div>
+      <div>
+        <product-details :productDetails="details"></product-details>
+      </div>
+      <div
+        v-for="(variant, index) in variants"
+        :key="variant.id"
+        @mouseover="updateVariant(index)"
+      >
+        <div class="product-container">
+          <span class="color-circle" :style="{ backgroundColor: variant.color}">
+          </span>
+          <span> {{ variant.color }} </span>
+          <span> {{ variant.quantity }} </span>
+        </div>
+      </div>
+      <div>
+        <p v-for="size in sizes">{{ size }}</p>
+      </div>
+      <div>
+        <button class="button" :class="{disabledButton: !inStock}" :disabled="!inStock" @click="addToCart">Add to cart</button>
+        <button class="button" :class="{disabledButton: !inStock}" :disabled="!inStock" @click="addToCart">+</button>
+        <button class="button" :class="{disabledButton: !inStock}" :disabled="!inStock" @click="removeFromCart">-</button>
+      </div>
+    </div>`,
   data() {
     return {
       description: 'Preimum socks',
@@ -49,7 +55,7 @@ app.component('product-display', {
       selectedVariant: 0,
       onSale: false,
       salesMessage: '',
-      details: ['50% cotton', '30% woool'],
+      details: ['50% cotton', '30% wool', '20% polyester'],
       sizes: ['small', 'medium'],
       variants: [
         {
@@ -93,10 +99,13 @@ app.component('product-display', {
     },
     isOnSale() {
       this.salesMessage = this.brand + this.product + ' is on sale';
-      if (this.variants[this.selectedVariant].onSale) 
-      return this.salesMessage
+      if (this.variants[this.selectedVariant].onSale) return this.salesMessage;
+    },
+    shipping() {
+      // if (this.premium) {
+      //   return 'Free';
+      // }
+      return this.premium ? 'Free' : '$5.00';
     },
   },
-});
-
 });
