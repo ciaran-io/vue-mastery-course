@@ -11,14 +11,20 @@
   <body>
     <div id="app">
       <div>
-        <p>Cart({{ cart }})</p>
-        <product-display :premium="premium"></product-display>
+        <span class="cart">Cart({{ cart.length }})</span>
+        <product-display
+          :premium="premium"
+          @add-to-cart="addToCartOne"
+          @remove-from-cart="removeFromCartOne"
+        ></product-display>
       </div>
     </div>
     <!-- Import Js -->
     <script src="./main.js"></script>
     <script src="./components/ProductDisplay.js"></script>
     <script src="./components/ProductDetails.js"></script>
+    <script src="./components/ReviewForm.js"></script>
+    <script src="./components/ReviewList.js"></script>
     <script>
       const storeApp = app.mount('#app');
     </script>

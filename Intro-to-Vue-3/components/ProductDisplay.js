@@ -7,7 +7,8 @@ app.component('product-display', {
   },
   template:
     /*html*/
-    `<div>
+    `
+    <div>
       <h1>{{ title }}</h1>
       <h1>{{ product }}</h1>
       <a :href="url">
@@ -25,27 +26,28 @@ app.component('product-display', {
       <div>
         <product-details :productDetails="details"></product-details>
       </div>
-      <div
-        v-for="(variant, index) in variants"
+    
+        <div  v-for="(variant, index) in variants"
         :key="variant.id"
-        @mouseover="updateVariant(index)"
-      >
-        <div class="product-container">
+        @mouseover="updateVariant(index)" class="product-container">
           <span class="color-circle" :style="{ backgroundColor: variant.color}">
           </span>
           <span> {{ variant.color }} </span>
           <span> {{ variant.quantity }} </span>
         </div>
-      </div>
+
       <div>
         <p v-for="size in sizes">{{ size }}</p>
       </div>
       <div>
-        <button class="button" :class="{disabledButton: !inStock}" :disabled="!inStock" @click="addToCart">Add to cart</button>
+        <button class="button" :class="{disabledButton: !inStock}" :disabled="!inStock" @updateCart="addToCart" @click="addToCart">Add to cart</button>
         <button class="button" :class="{disabledButton: !inStock}" :disabled="!inStock" @click="addToCart">+</button>
         <button class="button" :class="{disabledButton: !inStock}" :disabled="!inStock" @click="removeFromCart">-</button>
       </div>
-    </div>`,
+      <review-list v-if="reviews.length" :reviews="reviews"></review-list>
+    <review-form @review-submitted="addReview"></review-form>
+    </div>
+    `,
   data() {
     return {
       description: 'Preimum socks',
@@ -69,22 +71,25 @@ app.component('product-display', {
           id: 744,
           color: 'blue',
           image: './assets/images/socks_blue.jpg',
-          quantity: 0,
+          quantity: 15,
           onSale: false,
         },
       ],
+      reviews: [],
     };
   },
   methods: {
     addToCart() {
-      this.cart += 1;
+      this.$emit('add-to-cart', this.variants[this.selectedVariant].id);
     },
     removeFromCart() {
-      this.cart -= 1;
+      this.$emit('remove-from-cart', this.variants[this.selectedVariant].id);
     },
     updateVariant(index) {
       this.selectedVariant = index;
-      console.log(index);
+    },
+    addReview(review) {
+      this.reviews.push(review);
     },
   },
   computed: {
